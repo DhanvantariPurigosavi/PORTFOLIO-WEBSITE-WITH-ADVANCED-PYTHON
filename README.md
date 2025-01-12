@@ -4,10 +4,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import datetime
 
-# Replace with your OpenWeatherMap API Key
 API_KEY = "your_api_key"
-
-# Function to fetch weather data
 def fetch_weather_data(city_name):
     """
     Fetch 5-day weather forecast data from OpenWeatherMap API.
@@ -19,7 +16,6 @@ def fetch_weather_data(city_name):
     else:
         raise Exception(f"Failed to fetch data for {city_name}. HTTP Status: {response.status_code}")
 
-# Process weather data into a DataFrame
 def process_weather_data(data):
     """
     Process JSON weather data and return a DataFrame.
@@ -38,8 +34,7 @@ def process_weather_data(data):
         weather_data["weather"].append(entry["weather"][0]["description"])
 
     return pd.DataFrame(weather_data)
-
-# Visualization
+    
 def visualize_weather_data(data, city_name):
     """
     Create visualizations for temperature and humidity trends.
@@ -66,7 +61,7 @@ def visualize_weather_data(data, city_name):
     plt.tight_layout()
     plt.show()
 
-# Main Function
+
 if __name__ == "__main__":
     city = input("Enter the city name: ")
 
