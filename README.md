@@ -1,80 +1,25 @@
-import requests
-import pandas as pd
-import matplotlib.pyplot as plt
-import seaborn as sns
-import datetime
+#API INTEGRATION AND DATA VISUALIZATION
+Name: Dhanvantari Purigosavi
+Company: CODTECH IT SOLUTIONS
+ID: CT08DS512 Domain: Python Programming 
+Duration: December 12th, 2024 to January 12th, 2025. 
+Mentor: Santosh Kumar
+OVERVIEW OF THIS PROJECT
+How It Works
+API Integration:
 
-API_KEY = "your_api_key"
-def fetch_weather_data(city_name):
-    """
-    Fetch 5-day weather forecast data from OpenWeatherMap API.
-    """
-    url = f"http://api.openweathermap.org/data/2.5/forecast?q={city_name}&appid={API_KEY}&units=metric"
-    response = requests.get(url)
-    if response.status_code == 200:
-        return response.json()
-    else:
-        raise Exception(f"Failed to fetch data for {city_name}. HTTP Status: {response.status_code}")
+The script fetches weather forecast data for the next 5 days (in 3-hour intervals) for a specified city.
+Data includes temperature, humidity, and weather descriptions.
+Data Processing:
 
-def process_weather_data(data):
-    """
-    Process JSON weather data and return a DataFrame.
-    """
-    weather_data = {
-        "datetime": [],
-        "temperature": [],
-        "humidity": [],
-        "weather": []
-    }
+The JSON response is converted into a pandas DataFrame for analysis.
+Columns: datetime, temperature, humidity, weather_description.
+Data Visualization:
 
-    for entry in data["list"]:
-        weather_data["datetime"].append(datetime.datetime.fromtimestamp(entry["dt"]))
-        weather_data["temperature"].append(entry["main"]["temp"])
-        weather_data["humidity"].append(entry["main"]["humidity"])
-        weather_data["weather"].append(entry["weather"][0]["description"])
+Two visualizations are generated:
+Temperature Trend: A line chart showing temperature changes over time.
+Humidity Trend: A line chart showing humidity changes over time
 
-    return pd.DataFrame(weather_data)
-    
-def visualize_weather_data(data, city_name):
-    """
-    Create visualizations for temperature and humidity trends.
-    """
-    sns.set(style="whitegrid")
-
-    # Temperature Trend
-    plt.figure(figsize=(10, 6))
-    sns.lineplot(x="datetime", y="temperature", data=data, marker="o", color="blue")
-    plt.title(f"Temperature Trend in {city_name}", fontsize=16)
-    plt.xlabel("Datetime", fontsize=12)
-    plt.ylabel("Temperature (°C)", fontsize=12)
-    plt.xticks(rotation=45)
-    plt.tight_layout()
-    plt.show()
-
-    # Humidity Trend
-    plt.figure(figsize=(10, 6))
-    sns.lineplot(x="datetime", y="humidity", data=data, marker="o", color="green")
-    plt.title(f"Humidity Trend in {city_name}", fontsize=16)
-    plt.xlabel("Datetime", fontsize=12)
-    plt.ylabel("Humidity (%)", fontsize=12)
-    plt.xticks(rotation=45)
-    plt.tight_layout()
-    plt.show()
-
-
-if __name__ == "__main__":
-    city = input("Enter the city name: ")
-
-    try:
-        # Fetch and process data
-        raw_data = fetch_weather_data(city)
-        weather_df = process_weather_data(raw_data)
-
-        # Display DataFrame
-        print(weather_df.head())
-
-        # Visualize data
-        visualize_weather_data(weather_df, city)
-
-    except Exception as e:
-        print(f"Error: {e}")
+Deliverables
+Script: A Python script integrating the OpenWeatherMap API and visualizing the data.
+Dashboard: Visualizations for temperature and humidity trends.
